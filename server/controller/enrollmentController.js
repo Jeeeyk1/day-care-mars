@@ -23,12 +23,15 @@ const getEnrolleeById = async (req, res) => {
 };
 
 const addEnrollee = async (req, res) => {
-  console.log(req.body + " body");
+  console.log(req.body.birthDate + " body");
   const enrollee = new Enrollee({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
+    relationship:req.body.relationship,
     phoneNumber: req.body.phoneNumber,
+    birthDate:req.body.birthDate,
+    yearLevel:req.body.yearLevel
   });
 
   try {

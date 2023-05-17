@@ -23,10 +23,22 @@ const EnrollmentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  relationship:{
+    type:String,
+    required:true
+  },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
+  birthDate:{
+    type:String,
+    required:true
+  },
+  yearLevel:{
+    type:String,
+    required:false
+  }
 });
 
 module.exports = mongoose.model("Enrollees", EnrollmentSchema);

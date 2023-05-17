@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // Create a new user
 const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { lastName, email, password,firstName } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -19,7 +19,8 @@ const createUser = async (req, res) => {
 
     // Create the new user
     const newUser = new User({
-      name,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
     });
@@ -108,13 +109,11 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // Check if password is correct
     const isPasswordValid = await bcrypt.compare(password, user.password);
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(
@@ -127,10 +126,10 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // Create a JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const isAdmin = user.isAdmin;
 
-    res.json({ token });
+    res.json({ token,isAdmin,sucessful:true });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server Error" });

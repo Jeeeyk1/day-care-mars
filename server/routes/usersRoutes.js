@@ -13,9 +13,9 @@ const auth = require("../utils/auth");
 
 router.post("/signup", createUser);
 router.post("/login", login);
-router.get("/", auth.verifyToken, getUsers);
+router.get("/",  getUsers);
 router.get("/:id", auth.verifyToken, getUserById);
 router.patch("/:id", auth.verifyToken, updateUserById);
-router.delete("/:id", auth.verifyToken, auth.isAdmin, deleteUserById);
+router.delete("/:id",   deleteUserById);
 
 module.exports = router;
